@@ -204,11 +204,11 @@ namespace waypoint_server
         private_nh.param(
             "robot_base_frame",
             param.robot_base_frame,
-            std::string("base_link"));
+            std::string("nav_robot/base_link"));
         private_nh.param(
             "global_frame",
             param.global_frame,
-            std::string("map"));
+            std::string("nav_robot/map"));
         private_nh.param(
             "waypoints_file",
             param.waypoints_file,

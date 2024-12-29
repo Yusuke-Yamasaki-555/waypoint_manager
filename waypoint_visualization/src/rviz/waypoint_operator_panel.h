@@ -22,7 +22,7 @@ namespace waypoint_visualization
         void callSwitchCancel();
         void callNextWaypoint();
         void callWaypointSave();
-        void callPrevWaypoint();
+        void callResumeWaypoint();
 
     protected:
         QVBoxLayout *hbox_layout,
@@ -33,7 +33,7 @@ namespace waypoint_visualization
         QPushButton *switch_cancel_button,
             *next_waypoint_button,
             *waypoint_save_button,
-            *prev_waypoint_button;
+            *resume_waypoint_button;
 
         ros::NodeHandle nh,
             private_nh;
@@ -41,6 +41,6 @@ namespace waypoint_visualization
         ros::ServiceClient switch_cancel_client,
             next_waypoint_client,
             waypoint_save_client,
-            prev_waypoint_client;
+            resume_waypoint_client;
     };
 }

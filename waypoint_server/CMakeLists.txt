@@ -16,7 +16,6 @@ find_package(catkin REQUIRED COMPONENTS
     tf
     waypoint_manager_msgs
     dynamic_reconfigure
-    obstacle_detector
 )
 
 # generate_dynamic_reconfigure_options(

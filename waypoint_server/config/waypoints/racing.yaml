@@ -1,0 +1,109 @@
+waypoint_server:
+  scale: 1
+  position:
+    x: 1
+    y: 2
+    z: 3
+  euler_angles:
+    x: 0
+    y: 0
+    z: 1.57
+  waypoints:
+    - id: registed_0_1190087000000
+      position:
+        x: -1.802171
+        y: -0.9542629
+        z: -3
+      euler_angles:
+        x: 0
+        y: 0
+        z: -1.657366
+      properties:
+        - key: traffic_sign_OFF
+          value: ""
+        - key: white
+          value: ""
+        - key: stop
+          value: ""
+        - key: goal_radius
+          value: 0.25
+        - key: traffic_sign_ON
+          value: ""
+        - key: switch_segmentation_OFF
+          value: false
+        - key: switch_segmentation_ON
+          value: false
+    - id: registed_0_95904000000
+      position:
+        x: -0.9397203
+        y: -1.094926
+        z: -3
+      euler_angles:
+        x: -0
+        y: -0
+        z: 2.969136
+      properties:
+        - key: white
+          value: false
+        - key: goal_radius
+          value: 0.25
+        - key: stop
+          value: ""
+        - key: traffic_sign_ON
+          value: true
+        - key: switch_segmentation_OFF
+          value: false
+        - key: traffic_sign_OFF
+          value: ""
+        - key: switch_segmentation_ON
+          value: false
+    - id: 3
+      position:
+        x: -2.000076
+        y: -2.242498
+        z: -3
+      euler_angles:
+        x: 0
+        y: 0
+        z: -0.09210116
+      properties:
+        - key: goal_radius
+          value: 0.25
+        - key: stop
+          value: ""
+        - key: white
+          value: false
+        - key: traffic_sign_ON
+          value: ""
+        - key: switch_segmentation_OFF
+          value: ""
+        - key: traffic_sign_OFF
+          value: ""
+        - key: switch_segmentation_ON
+          value: ""
+      connections:
+        - 1
+    - id: registed_0_91705000000
+      position:
+        x: -1.16029
+        y: -2.326864
+        z: -3
+      euler_angles:
+        x: -0
+        y: 0
+        z: 1.462934
+      properties:
+        - key: goal_radius
+          value: 0.25
+        - key: stop
+          value: ""
+        - key: white
+          value: false
+        - key: traffic_sign_ON
+          value: false
+        - key: switch_segmentation_OFF
+          value: ""
+        - key: traffic_sign_OFF
+          value: false
+        - key: switch_segmentation_ON
+          value: ""

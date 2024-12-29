@@ -91,7 +91,6 @@ private:
     void goalradiusFeedback3(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &);
     void switchsegmentationFeedback1(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &);
     void switchsegmentationFeedback2(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &);
-    void standbymodeFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &);
 };
 
 Node::Node() : nh(), private_nh("~"), interactive_server("waypoint_visualization_node")
@@ -233,14 +232,16 @@ Node::Node() : nh(), private_nh("~"), interactive_server("waypoint_visualization
             std::placeholders::_1));
     menu_handler.setCheckState(stop_point_menu_id, interactive_markers::MenuHandler::UNCHECKED);
 
-    auto standby_menu_id = menu_handler.insert(
-        properties_menu_id,
-        "standby point",
-        std::bind(
-            &Node::standbymodeFeedback,
-            this,
-            std::placeholders::_1));
-    menu_handler.setCheckState(standby_menu_id, interactive_markers::MenuHandler::UNCHECKED);
+    // auto traffic_menu_id = menu_handler.insert(
+    //     properties_menu_id,
+    //     "Traffic sign point",
+    //     std::bind(
+    //         &Node::TrafficSignFeedback,
+    //         this,
+    //         std::placeholders::_1));
+    // menu_handler.setCheckState(traffic_menu_id, interactive_markers::MenuHandler::UNCHECKED);
+
+    //
 
     auto traffic_sign_menu_id = menu_handler.insert(
         properties_menu_id,
@@ -403,7 +404,6 @@ void Node::waypointsCallback(const waypoint_manager_msgs::Waypoints::ConstPtr &m
 
         bool stop_flag = false;
         bool white_flag = false;
-        bool standby_flag = false;
         bool switch_segmentation_flag = false;
         float goal_radius = param.default_goal_radius;
         bool traffic_flag = false;
@@ -417,10 +417,6 @@ void Node::waypointsCallback(const waypoint_manager_msgs::Waypoints::ConstPtr &m
             if (p.name == "stop" && p.data == "true")
             {
                 stop_flag = true;
-            }
-            if (p.name == "standby_mode" && p.data == "true")
-            {
-                standby_flag = true;
             }
             if (p.name == "white" && p.data == "true")
             {
@@ -477,15 +473,6 @@ void Node::waypointsCallback(const waypoint_manager_msgs::Waypoints::ConstPtr &m
                     flag_marker_parts[4].color.b = 0.7;
                 }
             }
-            if (standby_flag)
-            {
-                if (!stop_flag)
-                {
-                    flag_marker_parts[4].color.r = 0;
-                    flag_marker_parts[4].color.g = 0;
-                    flag_marker_parts[4].color.b = 0.7;
-                }
-            }
             else
             {
                 if ((!stop_flag) && (!white_flag))
@@ -498,23 +485,16 @@ void Node::waypointsCallback(const waypoint_manager_msgs::Waypoints::ConstPtr &m
 
             if (switch_segmentation_flag)
             {
-                if (!stop_flag)
-                {
-
-                    flag_marker_parts[4].color.r = 0.5;
-                    flag_marker_parts[4].color.g = 0.5;
-                    flag_marker_parts[4].color.b = 0.5;
-                }
+                flag_marker_parts[4].color.r = 0.5;
+                flag_marker_parts[4].color.g = 0.5;
+                flag_marker_parts[4].color.b = 0.5;
             }
 
             if (traffic_flag)
             {
-                if (!stop_flag)
-                {
-                    flag_marker_parts[4].color.r = 0.0;
-                    flag_marker_parts[4].color.g = 0.0;
-                    flag_marker_parts[4].color.b = 0.7;
-                }
+                flag_marker_parts[4].color.r = 0.0;
+                flag_marker_parts[4].color.g = 0.0;
+                flag_marker_parts[4].color.b = 0.7;
             }
         }
         else
@@ -745,46 +725,6 @@ void Node::switchStopPointFeedback(const visualization_msgs::InteractiveMarkerFe
 
         msg.waypoint.properties.push_back(waypoint_manager_msgs::Property());
         msg.waypoint.properties.back().name = "stop";
-        msg.waypoint.properties.back().data = "true";
-    }
-    else
-    {
-        menu_handler.setCheckState(entry_menu_id, interactive_markers::MenuHandler::UNCHECKED);
-    }
-    msg.waypoint.pose = feedback->pose;
-    msg.waypoint.identity = feedback->marker_name;
-    msg.header.frame_id = feedback->header.frame_id;
-    msg.header.stamp = ros::Time::now();
-    update_waypoint_publisher.publish(msg);
-
-    menu_handler.reApply(interactive_server);
-    interactive_server.applyChanges();
-}
-
-void Node::standbymodeFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
-{
-    ROS_INFO("Called standbymodeFeedback %s", feedback->marker_name.c_str());
-
-    interactive_markers::MenuHandler::EntryHandle entry_menu_id = feedback->menu_entry_id;
-    interactive_markers::MenuHandler::CheckState menu_check_state;
-    waypoint_manager_msgs::WaypointStamped msg;
-
-    menu_handler.getCheckState(entry_menu_id, menu_check_state);
-
-    if (menu_check_state == interactive_markers::MenuHandler::CHECKED)
-    {
-        menu_handler.setCheckState(entry_menu_id, interactive_markers::MenuHandler::UNCHECKED);
-
-        msg.waypoint.properties.push_back(waypoint_manager_msgs::Property());
-        msg.waypoint.properties.back().name = "standby_mode";
-        msg.waypoint.properties.back().data = "false";
-    }
-    else if (menu_check_state == interactive_markers::MenuHandler::UNCHECKED)
-    {
-        menu_handler.setCheckState(entry_menu_id, interactive_markers::MenuHandler::CHECKED);
-
-        msg.waypoint.properties.push_back(waypoint_manager_msgs::Property());
-        msg.waypoint.properties.back().name = "standby_mode";
         msg.waypoint.properties.back().data = "true";
     }
     else

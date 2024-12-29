@@ -80,12 +80,12 @@ auto main(int argc, char **argv) -> int {
     private_nh.param(
         "robot_base_frame",
         robot_base_frame,
-        std::string("base_link")
+        std::string("nav_robot/base_link")
     );
     private_nh.param(
         "global_frame",
         global_frame,
-        std::string("map")
+        std::string("nav_robot/map")
     );
     private_nh.param(
         "goal_check_frequency",

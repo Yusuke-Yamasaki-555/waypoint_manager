@@ -36,7 +36,7 @@ Node::Node() : nh(), private_nh("~") {
     private_nh.param(
         "frame_id",
         frame_id,
-        std::string("map")
+        std::string("nav_robot/map")
     );
     private_nh.param(
         "pose_topic",
